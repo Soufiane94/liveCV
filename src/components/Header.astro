@@ -1,0 +1,95 @@
+---
+const profileLinks = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/soufianeiha/' },
+  { label: 'GitHub', href: 'https://github.com/Soufiane94?tab=repositories' },
+  { label: 'CV', href: 'https://example.com/soufiane-cv.pdf' },
+];
+
+const text = {
+  en: {
+    about: 'About',
+    experience: 'Experience',
+    skills: 'Skills',
+    role: 'Software Engineer / Tech Lead',
+    profileLinks: 'Professional links',
+  },
+  fr: {
+    about: 'À propos',
+    experience: 'Expérience',
+    skills: 'Compétences',
+    role: 'Ingénieur logiciel / Tech Lead',
+    profileLinks: 'Liens professionnels',
+  },
+};
+---
+
+<header class="site-header" id="top">
+  <div class="content header-content">
+    <nav aria-label="Primary navigation">
+      <a class="wordmark" href="#top">Soufiane</a>
+      <div class="nav-actions">
+        <div class="nav-links">
+          <a href="#about"><span data-language="en">{text.en.about}</span><span data-language="fr" lang="fr" hidden>{text.fr.about}</span></a>
+          <a href="#experience"><span data-language="en">{text.en.experience}</span><span data-language="fr" lang="fr" hidden>{text.fr.experience}</span></a>
+          <a href="#skills"><span data-language="en">{text.en.skills}</span><span data-language="fr" lang="fr" hidden>{text.fr.skills}</span></a>
+        </div>
+        <button class="language-toggle" type="button" data-language-toggle data-label-en="Show site in French" data-label-fr="Afficher le site en anglais" aria-label="Show site in French" aria-pressed="false">
+          <span data-language-toggle-label>FR</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="introduction">
+      <p class="eyebrow"><span data-language="en">{text.en.role}</span><span data-language="fr" lang="fr" hidden>{text.fr.role}</span></p>
+      <h1>Soufiane I.H. AZAMI</h1>
+      <!-- <p class="summary">
+        Journey before destination ~ <i>Brando Sando</i> -->
+      <ul class="profile-links" aria-label={text.en.profileLinks} data-profile-links>
+        {
+          profileLinks.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const languageToggle = document.querySelector<HTMLButtonElement>('[data-language-toggle]');
+  const languageToggleLabel = document.querySelector<HTMLElement>('[data-language-toggle-label]');
+  const profileLinks = document.querySelector<HTMLElement>('[data-profile-links]');
+  const titleByLanguage = {
+    en: 'Soufiane — Software Engineer / Tech Lead',
+    fr: 'Soufiane — Ingénieur logiciel / Tech Lead',
+  };
+
+  const setLanguage = (language: 'en' | 'fr') => {
+    document.documentElement.lang = language;
+    document.title = titleByLanguage[language];
+
+    document.querySelectorAll<HTMLElement>('[data-language]').forEach((element) => {
+      element.hidden = element.dataset.language !== language;
+    });
+
+    if (profileLinks) {
+      profileLinks.setAttribute('aria-label', language === 'en' ? 'Professional links' : 'Liens professionnels');
+    }
+
+    if (languageToggle && languageToggleLabel) {
+      const nextLanguage = language === 'en' ? 'fr' : 'en';
+      languageToggleLabel.textContent = nextLanguage.toUpperCase();
+      languageToggle.setAttribute('aria-label', nextLanguage === 'fr' ? languageToggle.dataset.labelEn ?? '' : languageToggle.dataset.labelFr ?? '');
+      languageToggle.setAttribute('aria-pressed', String(language === 'fr'));
+    }
+  };
+
+  const storedLanguage = window.localStorage.getItem('portfolio-language');
+  setLanguage(storedLanguage === 'fr' ? 'fr' : 'en');
+
+  languageToggle?.addEventListener('click', () => {
+    const nextLanguage = document.documentElement.lang === 'fr' ? 'en' : 'fr';
+    window.localStorage.setItem('portfolio-language', nextLanguage);
+    setLanguage(nextLanguage);
+  });
+</script>

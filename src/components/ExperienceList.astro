@@ -1,0 +1,33 @@
+---
+import { experiences } from '../data/experiences';
+---
+
+<section class="section" id="experience" aria-labelledby="experience-heading">
+  <div class="content section-grid">
+    <h2 id="experience-heading"><span data-language="en">Experience</span><span data-language="fr" lang="fr" hidden>Expérience</span></h2>
+    <div class="section-content experience-list">
+      {
+        experiences.map((experience) => (
+          <article class="experience-item">
+            <div class="experience-meta">
+              <p><span data-language="en">{experience.period.en}</span><span data-language="fr" lang="fr" hidden>{experience.period.fr}</span></p>
+              {experience.location && <p>{experience.location}</p>}
+            </div>
+            <div class="experience-detail">
+              <h3><span data-language="en">{experience.role.en}</span><span data-language="fr" lang="fr" hidden>{experience.role.fr}</span></h3>
+              <p class="company">{experience.company}</p>
+              <p><span data-language="en">{experience.description.en}</span><span data-language="fr" lang="fr" hidden>{experience.description.fr}</span></p>
+              {
+                experience.technologies && (
+                  <ul class="tag-list" aria-label={`${experience.company} technologies`}>
+                    {experience.technologies.map((technology) => <li>{technology}</li>)}
+                  </ul>
+                )
+              }
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
