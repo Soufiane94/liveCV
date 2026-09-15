@@ -2,7 +2,7 @@
 const profileLinks = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/soufianeiha/' },
   { label: 'GitHub', href: 'https://github.com/Soufiane94?tab=repositories' },
-  { label: 'CV', href: 'https://example.com/soufiane-cv.pdf' },
+  { label: 'Azure Certifications', href: 'https://learn.microsoft.com/en-us/users/siha/credentials?tab=credentials-tab' },
 ];
 
 const text = {
@@ -10,6 +10,7 @@ const text = {
     about: 'About',
     experience: 'Experience',
     skills: 'Skills',
+    certifications: 'Certifications',
     role: 'Software Engineer / Tech Lead',
     profileLinks: 'Professional links',
   },
@@ -17,6 +18,7 @@ const text = {
     about: 'À propos',
     experience: 'Expérience',
     skills: 'Compétences',
+    certifications: 'Certifications',
     role: 'Ingénieur logiciel / Tech Lead',
     profileLinks: 'Liens professionnels',
   },
@@ -32,6 +34,7 @@ const text = {
           <a href="#about"><span data-language="en">{text.en.about}</span><span data-language="fr" lang="fr" hidden>{text.fr.about}</span></a>
           <a href="#experience"><span data-language="en">{text.en.experience}</span><span data-language="fr" lang="fr" hidden>{text.fr.experience}</span></a>
           <a href="#skills"><span data-language="en">{text.en.skills}</span><span data-language="fr" lang="fr" hidden>{text.fr.skills}</span></a>
+          <a href="#certifications"><span data-language="en">{text.en.certifications}</span><span data-language="fr" lang="fr" hidden>{text.fr.certifications}</span></a>
         </div>
         <button class="language-toggle" type="button" data-language-toggle data-label-en="Show site in French" data-label-fr="Afficher le site en anglais" aria-label="Show site in French" aria-pressed="false">
           <span data-language-toggle-label>FR</span>

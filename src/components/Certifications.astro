@@ -1,0 +1,46 @@
+---
+const certifications = [
+  {
+    code: 'AZ-900',
+    href:'https://learn.microsoft.com/api/credentials/share/en-us/Siha/FC766BCBE9766343?sharingId=75DF6474B579071',
+    en: 'Microsoft Azure Fundamentals',
+    fr: 'Fondamentaux Microsoft Azure',
+  },
+  {
+    code: 'AZ-204',
+    href:'https://learn.microsoft.com/api/credentials/share/en-us/Siha/3EF1F2AD5216817C?sharingId=75DF6474B579071',
+    en: 'Developing Solutions for Microsoft Azure',
+    fr: 'Développement de solutions pour Microsoft Azure',
+  },
+  {
+    code: 'AZ-400',
+    href:'https://learn.microsoft.com/api/credentials/share/en-us/Siha/ACB1DA5330BF348A?sharingId=75DF6474B579071',
+    en: 'Designing and Implementing Microsoft DevOps Solutions',
+    fr: 'Conception et implémentation de solutions DevOps Microsoft',
+  },
+];
+---
+
+<section class="section" id="certifications" aria-labelledby="certifications-heading">
+  <div class="content section-grid">
+    <h2 id="certifications-heading">
+      <span data-language="en">Certifications</span>
+      <span data-language="fr" lang="fr" hidden>Certifications</span>
+    </h2>
+    <div class="section-content">
+      <ul class="certification-list">
+        {
+          certifications.map((certification) => (
+            <li>
+              <span class="certification-code">{certification.code}</span>
+              <span>
+                <span data-language="en"><a href={certification.href} target="_blank" rel="noopener noreferrer">{certification.en}</a></span>
+                <span data-language="fr" lang="fr" hidden><a href={certification.href} target="_blank" rel="noopener noreferrer">{certification.fr}</a></span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

@@ -288,6 +288,25 @@ nav {
   content: "•";
 }
 
+.certification-list {
+  border-top: 1px solid var(--line);
+}
+
+.certification-list li {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.certification-code {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
 .site-footer {
   color: var(--muted);
   font-size: 0.88rem;
@@ -342,6 +361,11 @@ nav {
   .skills-grid {
     grid-template-columns: 1fr;
     gap: 1.75rem;
+  }
+
+  .certification-list li {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
   }
   
 }
