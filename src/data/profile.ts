@@ -40,8 +40,8 @@ export const profile: Profile = {
     { label: 'GitHub', url: 'https://github.com/Soufiane94?tab=repositories' },
     { label: 'Azure Certifications', url: 'https://learn.microsoft.com/en-us/users/siha/credentials?tab=credentials-tab' },
   ],
-  // TODO: confirm with Sirous — add a public contact email and a CV PDF to enable these calls to action.
-  // contactEmail: 'name@example.com',
+  // TODO: confirm with Sirous — add a CV PDF to public/ and set cvPath to show the download link.
+  contactEmail: 'soidhaaz@gmail.com',
   // cvPath: '/cv.pdf',
   about: [
     {
@@ -49,8 +49,8 @@ export const profile: Profile = {
       fr: 'Lead software engineer spécialisé en .NET, Azure et React/Angular. Depuis 2018, je développe des applications métier dans des secteurs comme la banque, le négoce de matières premières et l’assurance, et je pilote aujourd’hui une équipe Scrum. Je suis titulaire de trois certifications Microsoft Azure, dont DevOps Engineer Expert.',
     },
     {
-      en: 'I’m driven by the satisfaction of solving complex problems — to me, it’s the best way to learn and keep improving. Lately, I’ve also been building with AI coding agents such as Claude Code and OpenAI Codex.',
-      fr: 'Ce qui me motive\u00a0: la satisfaction de venir à bout d’un problème complexe — c’est, selon moi, la meilleure façon d’apprendre et de progresser. Depuis peu, je développe aussi avec des agents de code IA comme Claude Code et OpenAI Codex.',
+      en: 'I’m driven by the satisfaction of solving complex problems. To me, it’s the best way to learn and keep improving. Lately, I’ve also been building with AI coding agents such as Claude Code and OpenAI Codex.',
+      fr: 'Ce qui me motive\u00a0: la satisfaction de venir à bout d’un problème complexe. C’est, selon moi, la meilleure façon d’apprendre et de progresser. Depuis peu, je développe aussi avec des agents de code IA comme Claude Code et OpenAI Codex.',
     },
   ],
   quote: { text: 'Journey before destination', author: 'Brandon Sanderson' },
