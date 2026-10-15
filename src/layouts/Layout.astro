@@ -1,8 +1,9 @@
 ---
 import '../styles/global.css';
+import { defaultLocale, type LocalizedText } from '../i18n';
 
 interface Props {
-  title: string;
+  title: LocalizedText;
   description: string;
 }
 
@@ -10,16 +11,27 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={defaultLocale} data-title-en={title.en} data-title-fr={title.fr}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title[defaultLocale]}</title>
+    <script is:inline>
+      // Apply the visitor's stored language before first paint (same key as LanguageToggle.astro).
+      try {
+        if (localStorage.getItem('portfolio-language') === 'fr') {
+          document.documentElement.lang = 'fr';
+          document.title = document.documentElement.dataset.titleFr || document.title;
+        }
+      } catch {
+        // Storage unavailable: keep the default language.
+      }
+    </script>
     <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={title[defaultLocale]} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://example.com" />
-    <title>{title}</title>
   </head>
   <body>
     <slot />

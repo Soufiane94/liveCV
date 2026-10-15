@@ -1,33 +1,60 @@
 ---
 import { experiences } from '../data/experiences';
+import { formatYearMonth, localizedAriaLabel, ui } from '../i18n';
+import Localized from './Localized.astro';
+import Section from './Section.astro';
 ---
 
-<section class="section" id="experience" aria-labelledby="experience-heading">
-  <div class="content section-grid">
-    <h2 id="experience-heading"><span data-language="en">Experience</span><span data-language="fr" lang="fr" hidden>Expérience</span></h2>
-    <div class="section-content experience-list">
-      {
-        experiences.map((experience) => (
-          <article class="experience-item">
-            <div class="experience-meta">
-              <p><span data-language="en">{experience.period.en}</span><span data-language="fr" lang="fr" hidden>{experience.period.fr}</span></p>
-              {experience.location && <p>{experience.location}</p>}
-            </div>
-            <div class="experience-detail">
-              <h3><span data-language="en">{experience.role.en}</span><span data-language="fr" lang="fr" hidden>{experience.role.fr}</span></h3>
-              <p class="company">{experience.company}</p>
-              <p><span data-language="en">{experience.description.en}</span><span data-language="fr" lang="fr" hidden>{experience.description.fr}</span></p>
-              {
-                experience.technologies && (
-                  <ul class="tag-list" aria-label={`${experience.company} technologies`}>
-                    {experience.technologies.map((technology) => <li>{technology}</li>)}
-                  </ul>
-                )
-              }
-            </div>
-          </article>
-        ))
-      }
-    </div>
+<Section id="experience">
+  <div class="experience-list">
+    {
+      experiences.map((experience) => (
+        <article class="experience-item">
+          <h3 class="experience-title">
+            <Localized text={experience.role} />
+            <span class="visually-hidden">, </span>
+            <span class="company">{experience.company}</span>
+          </h3>
+          <p class="experience-meta">
+            <span>
+              <time datetime={experience.start}>
+                <Localized text={formatYearMonth(experience.start)} />
+              </time>
+              {' – '}
+              {experience.end ? (
+                <time datetime={experience.end}>
+                  <Localized text={formatYearMonth(experience.end)} />
+                </time>
+              ) : (
+                <Localized text={ui.present} />
+              )}
+            </span>
+            <span>
+              <Localized text={experience.location} />
+            </span>
+          </p>
+          <div class="experience-body">
+            <ul class="highlights">
+              {experience.highlights.map((highlight) => (
+                <li>
+                  <Localized text={highlight} />
+                </li>
+              ))}
+            </ul>
+            <ul
+              class="tag-list"
+              {...localizedAriaLabel({
+                en: `Technologies used at ${experience.company}`,
+                fr: `Technologies utilisées chez ${experience.company}`,
+              })}
+            >
+              {experience.technologies.map((technology) => (
+                <li>{technology}</li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))
+    }
   </div>
-</section>
+</Section>

@@ -1,0 +1,24 @@
+---
+import { sections, type SectionId } from '../data/sections';
+import Localized from './Localized.astro';
+
+interface Props {
+  id: SectionId;
+}
+
+const { id } = Astro.props;
+const section = sections.find((candidate) => candidate.id === id);
+
+if (!section) {
+  throw new Error(`Unknown section "${id}"`);
+}
+---
+
+<section class="section" id={id} aria-labelledby={`${id}-heading`}>
+  <div class="content section-grid">
+    <h2 id={`${id}-heading`}><Localized text={section.title} /></h2>
+    <div class="section-content">
+      <slot />
+    </div>
+  </div>
+</section>

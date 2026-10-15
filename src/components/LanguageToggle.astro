@@ -1,0 +1,66 @@
+---
+import { ui } from '../i18n';
+---
+
+<!--
+  The visible label is the language to switch to; its description (title) explains the action.
+  Both labels are rendered so the right one shows before this script runs.
+-->
+<button
+  class="language-toggle"
+  type="button"
+  data-language-toggle
+  title={ui.switchLanguage.en}
+  data-title-en={ui.switchLanguage.en}
+  data-title-fr={ui.switchLanguage.fr}
+>
+  <span data-language="en">FR</span><span data-language="fr">EN</span>
+</button>
+
+<script>
+  import { locales, type Locale } from '../i18n';
+
+  // Keep in sync with the inline script in Layout.astro, which applies the choice before first paint.
+  const storageKey = 'portfolio-language';
+  const root = document.documentElement;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-language-toggle]');
+
+  const isLocale = (value: unknown): value is Locale => locales.includes(value as Locale);
+
+  const storeLocale = (locale: Locale) => {
+    try {
+      localStorage.setItem(storageKey, locale);
+    } catch {
+      // Storage can be blocked (privacy settings); the choice then lasts for this page view only.
+    }
+  };
+
+  const applyLocale = (locale: Locale) => {
+    const suffix = locale === 'en' ? 'En' : 'Fr';
+    root.lang = locale;
+
+    const title = root.dataset[`title${suffix}`];
+    if (title) {
+      document.title = title;
+    }
+
+    document.querySelectorAll<HTMLElement>('[data-aria-label-en]').forEach((element) => {
+      const label = element.dataset[`ariaLabel${suffix}`];
+      if (label) {
+        element.setAttribute('aria-label', label);
+      }
+    });
+
+    if (toggle) {
+      toggle.title = toggle.dataset[`title${suffix}`] ?? '';
+    }
+  };
+
+  applyLocale(isLocale(root.lang) ? root.lang : 'en');
+
+  toggle?.addEventListener('click', () => {
+    const nextLocale: Locale = root.lang === 'fr' ? 'en' : 'fr';
+    storeLocale(nextLocale);
+    applyLocale(nextLocale);
+  });
+</script>

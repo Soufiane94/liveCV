@@ -1,24 +1,30 @@
-import type { LocalizedText } from './experiences';
+import type { Translatable } from '../i18n';
 
 export interface SkillGroup {
-  name: LocalizedText;
-  skills: string[];
+  /** Stable identifier, used for heading anchors. */
+  id: string;
+  name: Translatable;
+  skills: Translatable[];
 }
 
 export const skillGroups: SkillGroup[] = [
   {
-    name: { en: 'Backend', fr: 'Backend' },
+    id: 'backend',
+    name: 'Backend',
     skills: ['.NET', 'Node.js', 'SQL Server', 'REST APIs', 'SQL', 'Kafka', 'Spark'],
   },
   {
-    name: { en: 'Frontend', fr: 'Frontend' },
+    id: 'frontend',
+    name: 'Frontend',
     skills: ['React', 'Angular', 'TypeScript', 'HTML', 'CSS'],
   },
   {
-    name: { en: 'Cloud / DevOps', fr: 'Cloud / DevOps' },
+    id: 'cloud-devops',
+    name: 'Cloud / DevOps',
     skills: ['Docker', 'CI/CD', 'AWS', 'Azure', 'Observability'],
   },
   {
+    id: 'architecture-tools',
     name: { en: 'Architecture / Tools', fr: 'Architecture / Outils' },
     skills: ['System design', 'Design Patterns', 'Technical leadership', 'Git', 'Agile delivery'],
   },

@@ -1,0 +1,12 @@
+---
+import { localize, type Translatable } from '../i18n';
+
+interface Props {
+  text: Translatable;
+}
+
+// Both translations are rendered; global.css shows the one matching <html lang>.
+const { en, fr } = localize(Astro.props.text);
+---
+
+{en === fr ? en : <><span data-language="en">{en}</span><span data-language="fr" lang="fr">{fr}</span></>}

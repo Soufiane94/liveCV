@@ -5,13 +5,11 @@ import ExperienceList from '../components/ExperienceList.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Skills from '../components/Skills.astro';
+import { profile } from '../data/profile';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout
-  title="Soufiane — Software Engineer / Tech Lead"
-  description="The professional profile and experience of Soufiane, a software engineer and tech lead."
->
+<Layout title={profile.seo.title} description={profile.seo.description}>
   <Header />
   <main>
     <About />
