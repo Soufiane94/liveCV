@@ -6,6 +6,8 @@ export interface ProfileLink {
 }
 
 export interface Profile {
+  /** Full name for metadata and structured data. */
+  fullName: string;
   /** Used for the wordmark and the footer. */
   shortName: string;
   /** Name as shown in the page heading. */
@@ -15,10 +17,17 @@ export interface Profile {
   /** Paragraphs of the About section. */
   about: LocalizedText[];
   quote: { text: string; author: string };
-  seo: { title: LocalizedText; description: string };
+  seo: {
+    title: LocalizedText;
+    /** Search and social description (shown in English, the site's default language). */
+    description: string;
+    /** Alternative text for the social preview image (public/og-image.png). */
+    imageAlt: string;
+  };
 }
 
 export const profile: Profile = {
+  fullName: 'Soufiane I.H. Azami',
   shortName: 'Soufiane',
   displayName: 'Soufiane I.H. AZAMI',
   headline: { en: 'Software Engineer / Tech Lead', fr: 'Ingénieur logiciel / Tech Lead' },
@@ -36,9 +45,11 @@ export const profile: Profile = {
   quote: { text: 'Journey before destination', author: 'Brandon Sanderson' },
   seo: {
     title: {
-      en: 'Soufiane — Software Engineer / Tech Lead',
-      fr: 'Soufiane — Ingénieur logiciel / Tech Lead',
+      en: 'Soufiane I.H. Azami — Software Engineer / Tech Lead',
+      fr: 'Soufiane I.H. Azami — Ingénieur logiciel / Tech Lead',
     },
-    description: 'The professional profile and experience of Soufiane, a software engineer and tech lead.',
+    description:
+      'Paris-based lead software engineer building .NET, Azure and React/Angular applications since 2018. Microsoft Certified DevOps Engineer Expert.',
+    imageAlt: 'Soufiane I.H. Azami — Software Engineer / Tech Lead. .NET, Azure, React, Angular.',
   },
 };

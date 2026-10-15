@@ -7,9 +7,13 @@ import Header from '../components/Header.astro';
 import Skills from '../components/Skills.astro';
 import { profile } from '../data/profile';
 import Layout from '../layouts/Layout.astro';
+import { buildProfilePageSchema, serializeJsonLd } from '../lib/structured-data';
+
+const structuredData = Astro.site && serializeJsonLd(buildProfilePageSchema(Astro.site));
 ---
 
 <Layout title={profile.seo.title} description={profile.seo.description}>
+  {structuredData && <script is:inline slot="head" type="application/ld+json" set:html={structuredData} />}
   <Header />
   <main>
     <About />
