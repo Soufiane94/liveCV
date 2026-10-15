@@ -29,7 +29,7 @@ import Localized from './Localized.astro';
     <div class="introduction">
       <p class="eyebrow"><Localized text={profile.headline} /></p>
       <h1>{profile.displayName}</h1>
-      <ul class="profile-links" {...localizedAriaLabel(ui.professionalLinks)}>
+      <ul class="profile-links">
         {
           profile.links.map((link) => (
             <li>

@@ -1,6 +1,6 @@
 ---
 import { experiences } from '../data/experiences';
-import { formatYearMonth, localizedAriaLabel, ui } from '../i18n';
+import { formatYearMonth, ui } from '../i18n';
 import Localized from './Localized.astro';
 import Section from './Section.astro';
 ---
@@ -41,13 +41,8 @@ import Section from './Section.astro';
                 </li>
               ))}
             </ul>
-            <ul
-              class="tag-list"
-              {...localizedAriaLabel({
-                en: `Technologies used at ${experience.company}`,
-                fr: `Technologies utilisées chez ${experience.company}`,
-              })}
-            >
+            <p class="visually-hidden">Technologies</p>
+            <ul class="tag-list">
               {experience.technologies.map((technology) => (
                 <li>{technology}</li>
               ))}

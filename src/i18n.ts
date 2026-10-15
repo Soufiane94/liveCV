@@ -40,7 +40,6 @@ export const localizedAriaLabel = (label: LocalizedText) => ({
 export const ui = {
   skipToContent: { en: 'Skip to content', fr: 'Aller au contenu' },
   primaryNavigation: { en: 'Primary', fr: 'Principale' },
-  professionalLinks: { en: 'Professional links', fr: 'Liens professionnels' },
   switchLanguage: { en: 'Show site in French', fr: 'Afficher le site en anglais' },
   present: { en: 'Present', fr: 'aujourd’hui' },
   opensInNewTab: { en: '(opens in a new tab)', fr: '(s’ouvre dans un nouvel onglet)' },
