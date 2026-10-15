@@ -7,7 +7,11 @@ export interface Experience {
   /** Omit for the current position. */
   end?: YearMonth;
   location: Translatable;
-  /** One entry per bullet point, most recent first. */
+  /**
+   * One entry per bullet point, most recent project first.
+   * English: start with an action verb (present tense for the current role, past tense otherwise).
+   * French: nominal CV style ("Pilotage…", "Développement…").
+   */
   highlights: LocalizedText[];
   technologies: string[];
 }
@@ -19,12 +23,13 @@ export const experiences: Experience[] = [
     start: '2026-08',
     location: 'Paris, France',
     highlights: [
+      // TODO: confirm with Sirous — add team size, the scope of the accounting systems and one or two outcomes.
       {
-        en: 'Leading a Scrum team responsible for the development and maintenance of accounting systems.',
-        fr: 'Pilotage d’une équipe Scrum responsable du développement et de la maintenance de systèmes comptables.',
+        en: 'Lead a Scrum team that develops and maintains accounting systems.',
+        fr: 'Pilotage d’une équipe Scrum chargée du développement et de la maintenance de systèmes comptables.',
       },
     ],
-    technologies: ['.NET Core', ' Sql Server', 'Kafka', 'Spark', 'GitLab', 'React'],
+    technologies: ['.NET Core', 'SQL Server', 'Kafka', 'Spark', 'React', 'GitLab'],
   },
   {
     company: 'Avanade',
@@ -33,16 +38,17 @@ export const experiences: Experience[] = [
     end: '2026-08',
     location: 'Paris, France',
     highlights: [
+      // TODO: confirm with Sirous — any measurable result (go-live, number of users, delivery cadence, performance)?
       {
-        en: 'Project 2: Led a Scrum team of 6 developers in developing a web application for a commodities trading client, covering trading operations, logistics, contracts, and pricing.',
-        fr: 'Projet 2 : Pilotage d’une équipe Scrum de 6 développeurs pour une application web destinée à un client de négoce de matières premières, couvrant les opérations de trading, la logistique, les contrats et la tarification.',
+        en: 'Led a Scrum team of 6 developers building a web application for a commodities trading client, covering trading operations, logistics, contracts, and pricing.',
+        fr: 'Pilotage d’une équipe Scrum de 6 développeurs sur une application web pour un client du négoce de matières premières\u00a0: opérations de trading, logistique, contrats et tarification.',
       },
       {
-        en: 'Project 1: React Developer in a Scrum team of 4, developing a progressive web application for a corporate catering client, enabling employees to order meals for pickup or delivery.',
-        fr: 'Projet 1 : Développeur React au sein d’une équipe Scrum de 4 personnes, pour une application web progressive de restauration d’entreprise permettant aux employés de commander des repas à emporter ou en livraison.',
+        en: 'Developed a React progressive web app (PWA) for a corporate catering client, letting employees order meals for pickup or delivery (Scrum team of 4).',
+        fr: 'Développement en React d’une application web progressive (PWA) pour un client de restauration d’entreprise, permettant aux collaborateurs de commander leurs repas à emporter ou en livraison (équipe Scrum de 4 personnes).',
       },
     ],
-    technologies: ['.NET 8 Microservices', ' Sql Server', 'Docker', 'Kubernetes', 'Azure DevOps', 'React', 'Angular', 'TypeScript', 'Azure CI/CD'],
+    technologies: ['.NET 8', 'Microservices', 'SQL Server', 'React', 'Angular', 'TypeScript', 'Docker', 'Kubernetes', 'Azure DevOps', 'Azure CI/CD'],
   },
   {
     company: 'Oriolis',
@@ -52,15 +58,15 @@ export const experiences: Experience[] = [
     location: 'Palaiseau, France',
     highlights: [
       {
-        en: 'Project 2: Full-stack Developer in a Scrum team of 3, developing a regulatory text management application for UTAC.',
-        fr: 'Projet 2 : Développeur full stack au sein d’une équipe Scrum de 3 personnes, pour une application de gestion de textes réglementaires destinée à UTAC.',
+        en: 'Developed a regulatory text management application for UTAC as a full-stack developer in a Scrum team of 3.',
+        fr: 'Développement full stack d’une application de gestion des textes réglementaires pour l’UTAC, au sein d’une équipe Scrum de 3 personnes.',
       },
       {
-        en: 'Project 1: Designed and developed an application for certification management and customer audit scheduling.',
-        fr: 'Projet 1 : Conception et développement d’une application de gestion des certifications et de planification des audits clients.',
+        en: 'Designed and developed an application for managing certifications and scheduling customer audits.',
+        fr: 'Conception et développement d’une application de gestion des certifications et de planification des audits clients.',
       },
     ],
-    technologies: [' .NET Core ', 'Angular', ' SQL Server', ' Azure CI/CD'],
+    technologies: ['.NET Core', 'Angular', 'SQL Server', 'Azure CI/CD'],
   },
   {
     company: 'Capgemini',
@@ -70,11 +76,11 @@ export const experiences: Experience[] = [
     location: { en: 'Casablanca, Morocco', fr: 'Casablanca, Maroc' },
     highlights: [
       {
-        en: 'Developed an application for managing contractual obligations for Suez Eau France.',
+        en: 'Developed a contractual obligations management application for Suez Eau France.',
         fr: 'Développement d’une application de gestion des obligations contractuelles pour Suez Eau France.',
       },
     ],
-    technologies: ['NET Core 2', 'Angular', 'ORACLE'],
+    technologies: ['.NET Core 2', 'Angular', 'Oracle'],
   },
   {
     company: 'Marjane Holding',
@@ -83,12 +89,13 @@ export const experiences: Experience[] = [
     end: '2019-04',
     location: { en: 'Casablanca, Morocco', fr: 'Casablanca, Maroc' },
     highlights: [
+      // TODO: confirm with Sirous — size or impact of the migration (users, invoice volume, outcome)?
       {
-        en: 'Migrated a supplier invoice management application from VB6 to .NET MVC 5 with an Oracle database.',
-        fr: 'Migration d’une application de gestion de factures fournisseurs de VB6 vers .NET MVC 5 avec une base de données Oracle.',
+        en: 'Migrated a supplier invoice management application from VB6 to ASP.NET MVC 5 on an Oracle database.',
+        fr: 'Migration d’une application de gestion des factures fournisseurs de VB6 vers ASP.NET MVC 5, sur base de données Oracle.',
       },
     ],
-    technologies: ['.NET MVC', 'VB6', 'ORACLE'],
+    technologies: ['ASP.NET MVC 5', 'VB6', 'Oracle'],
   },
   {
     company: 'Accenture',
@@ -98,14 +105,14 @@ export const experiences: Experience[] = [
     location: { en: 'Casablanca, Morocco', fr: 'Casablanca, Maroc' },
     highlights: [
       {
-        en: 'Project 2: Developed and maintained an insurance management application for AXA and BNP.',
-        fr: 'Projet 2 : Développement et maintenance d’une application de gestion d’assurances pour AXA et BNP.',
+        en: 'Developed and maintained an insurance management application for AXA and BNP.',
+        fr: 'Développement et maintenance d’une application de gestion d’assurances pour AXA et BNP.',
       },
       {
-        en: 'Project 1 – Internship: Designed, developed, and deployed a C# WPF application generating configuration files used by an AXA and BNP insurance management system.',
-        fr: 'Projet 1 – Stage : Conception, développement et déploiement d’une application C# WPF générant des fichiers de configuration utilisés par un système de gestion d’assurances AXA et BNP.',
+        en: 'Designed, developed, and deployed a C# WPF application that generates configuration files for an AXA and BNP insurance management system (internship).',
+        fr: 'Conception, développement et déploiement d’une application C# WPF générant des fichiers de configuration pour un système de gestion d’assurances AXA et BNP (stage).',
       },
     ],
-    technologies: ['C#', 'XAML'],
+    technologies: ['C#', 'WPF', 'XAML'],
   },
 ];

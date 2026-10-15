@@ -45,8 +45,12 @@ export const profile: Profile = {
   // cvPath: '/cv.pdf',
   about: [
     {
-      en: "I'm a software engineer, passionate about tech. I pursue the feeling that comes after solving a complex problem; I believe that's the only way to learn and become better.",
-      fr: 'Je suis ingénieur logiciel et passionné de technologie. Je recherche la satisfaction qui suit la résolution d’un problème complexe ; je crois que c’est la meilleure façon d’apprendre et de progresser.',
+      en: 'Lead software engineer specializing in .NET, Azure, and React/Angular. Since 2018, I’ve built business applications in sectors such as banking, commodities trading, and insurance, and I now lead a Scrum team. I hold three Microsoft Azure certifications, including DevOps Engineer Expert.',
+      fr: 'Lead software engineer spécialisé en .NET, Azure et React/Angular. Depuis 2018, je développe des applications métier dans des secteurs comme la banque, le négoce de matières premières et l’assurance, et je pilote aujourd’hui une équipe Scrum. Je suis titulaire de trois certifications Microsoft Azure, dont DevOps Engineer Expert.',
+    },
+    {
+      en: 'I’m driven by the satisfaction of solving complex problems — to me, it’s the best way to learn and keep improving. Lately, I’ve also been building with AI coding agents such as Claude Code and OpenAI Codex.',
+      fr: 'Ce qui me motive\u00a0: la satisfaction de venir à bout d’un problème complexe — c’est, selon moi, la meilleure façon d’apprendre et de progresser. Depuis peu, je développe aussi avec des agents de code IA comme Claude Code et OpenAI Codex.',
     },
   ],
   quote: { text: 'Journey before destination', author: 'Brandon Sanderson' },
@@ -56,7 +60,7 @@ export const profile: Profile = {
       fr: 'Soufiane I.H. Azami — Ingénieur logiciel / Tech Lead',
     },
     description:
-      'Paris-based lead software engineer building .NET, Azure and React/Angular applications since 2018. Microsoft Certified DevOps Engineer Expert.',
+      'Lead software engineer in Paris specializing in .NET, Azure, and React/Angular. Microsoft Certified: Azure Developer Associate and DevOps Engineer Expert.',
     imageAlt: 'Soufiane I.H. Azami — Software Engineer / Tech Lead. .NET, Azure, React, Angular.',
   },
 };

@@ -1,7 +1,7 @@
 import { certifications } from '../data/certifications';
 import { experiences } from '../data/experiences';
 import { profile } from '../data/profile';
-import { skillGroups } from '../data/skills';
+import { skillCategories } from '../data/skills';
 import { localize } from '../i18n';
 
 /** schema.org ProfilePage for the site owner, built from the same data the page renders. */
@@ -26,7 +26,13 @@ export const buildProfilePageSchema = (siteUrl: URL) => {
       jobTitle: currentRole && localize(currentRole.role).en,
       worksFor: currentRole && { '@type': 'Organization', name: currentRole.company },
       sameAs: profile.links.map((link) => withoutQuery(link.url)),
-      knowsAbout: [...new Set(skillGroups.flatMap((group) => group.skills.map((skill) => localize(skill).en)))],
+      knowsAbout: [
+        ...new Set(
+          skillCategories.flatMap((category) =>
+            category.groups.flatMap((group) => group.skills.map((skill) => localize(skill).en)),
+          ),
+        ),
+      ],
       hasCredential: certifications.map((certification) => ({
         '@type': 'EducationalOccupationalCredential',
         name: localize(certification.name).en,
