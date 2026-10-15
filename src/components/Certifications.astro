@@ -13,6 +13,7 @@ import Section from './Section.astro';
           <span class="certification-code">{certification.code}</span>
           <a href={certification.url} target="_blank" rel="noopener noreferrer">
             <Localized text={certification.name} />
+            {' '}
             <span class="visually-hidden">
               <Localized text={ui.opensInNewTab} />
             </span>
