@@ -38,9 +38,12 @@ export const localizedAriaLabel = (label: LocalizedText) => ({
 
 /** Interface strings shared across components. */
 export const ui = {
+  skipToContent: { en: 'Skip to content', fr: 'Aller au contenu' },
   primaryNavigation: { en: 'Primary', fr: 'Principale' },
   professionalLinks: { en: 'Professional links', fr: 'Liens professionnels' },
   switchLanguage: { en: 'Show site in French', fr: 'Afficher le site en anglais' },
   present: { en: 'Present', fr: 'aujourd’hui' },
   opensInNewTab: { en: '(opens in a new tab)', fr: '(s’ouvre dans un nouvel onglet)' },
+  email: { en: 'Email', fr: 'E-mail' },
+  downloadCv: { en: 'Download CV (PDF)', fr: 'Télécharger le CV (PDF)' },
 } satisfies Record<string, LocalizedText>;

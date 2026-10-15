@@ -14,6 +14,10 @@ export interface Profile {
   displayName: string;
   headline: LocalizedText;
   links: ProfileLink[];
+  /** Shown as an "Email" link in the header when set. */
+  contactEmail?: string;
+  /** Path of a CV file in public/ (e.g. '/cv.pdf'); shown as a download link when set. */
+  cvPath?: string;
   /** Paragraphs of the About section. */
   about: LocalizedText[];
   quote: { text: string; author: string };
@@ -36,6 +40,9 @@ export const profile: Profile = {
     { label: 'GitHub', url: 'https://github.com/Soufiane94?tab=repositories' },
     { label: 'Azure Certifications', url: 'https://learn.microsoft.com/en-us/users/siha/credentials?tab=credentials-tab' },
   ],
+  // TODO: confirm with Sirous — add a public contact email and a CV PDF to enable these calls to action.
+  // contactEmail: 'name@example.com',
+  // cvPath: '/cv.pdf',
   about: [
     {
       en: "I'm a software engineer, passionate about tech. I pursue the feeling that comes after solving a complex problem; I believe that's the only way to learn and become better.",

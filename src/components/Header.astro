@@ -37,6 +37,24 @@ import Localized from './Localized.astro';
             </li>
           ))
         }
+        {
+          profile.contactEmail && (
+            <li>
+              <a href={`mailto:${profile.contactEmail}`}>
+                <Localized text={ui.email} />
+              </a>
+            </li>
+          )
+        }
+        {
+          profile.cvPath && (
+            <li>
+              <a href={profile.cvPath} download>
+                <Localized text={ui.downloadCv} />
+              </a>
+            </li>
+          )
+        }
       </ul>
     </div>
   </div>

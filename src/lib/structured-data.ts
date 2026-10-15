@@ -22,6 +22,7 @@ export const buildProfilePageSchema = (siteUrl: URL) => {
       '@id': new URL('#person', siteUrl).href,
       name: profile.fullName,
       url: siteUrl.href,
+      email: profile.contactEmail,
       jobTitle: currentRole && localize(currentRole.role).en,
       worksFor: currentRole && { '@type': 'Organization', name: currentRole.company },
       sameAs: profile.links.map((link) => withoutQuery(link.url)),

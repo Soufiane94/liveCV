@@ -15,7 +15,7 @@ const structuredData = Astro.site && serializeJsonLd(buildProfilePageSchema(Astr
 <Layout title={profile.seo.title} description={profile.seo.description}>
   {structuredData && <script is:inline slot="head" type="application/ld+json" set:html={structuredData} />}
   <Header />
-  <main>
+  <main id="main">
     <About />
     <ExperienceList />
     <Skills />
