@@ -1,22 +1,22 @@
 ---
 import { sections, type SectionId } from '../data/sections';
+import type { Translatable } from '../i18n';
 import Localized from './Localized.astro';
 
-interface Props {
-  id: SectionId;
-}
+// A home page section takes its title from sections.ts; a section on another page passes its own.
+type Props = { id: SectionId } | { id: string; title: Translatable };
 
 const { id } = Astro.props;
-const section = sections.find((candidate) => candidate.id === id);
+const title = 'title' in Astro.props ? Astro.props.title : sections.find((section) => section.id === id)?.title;
 
-if (!section) {
+if (!title) {
   throw new Error(`Unknown section "${id}"`);
 }
 ---
 
 <section class="section" id={id} aria-labelledby={`${id}-heading`}>
   <div class="content section-grid">
-    <h2 id={`${id}-heading`}><Localized text={section.title} /></h2>
+    <h2 id={`${id}-heading`}><Localized text={title} /></h2>
     <div class="section-content">
       <slot />
     </div>

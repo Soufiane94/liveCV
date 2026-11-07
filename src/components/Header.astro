@@ -1,30 +1,13 @@
 ---
 import { profile } from '../data/profile';
-import { sections } from '../data/sections';
-import { localizedAriaLabel, ui } from '../i18n';
-import LanguageToggle from './LanguageToggle.astro';
+import { ui } from '../i18n';
 import Localized from './Localized.astro';
+import SiteNav from './SiteNav.astro';
 ---
 
 <header class="site-header" id="top">
   <div class="content header-content">
-    <nav {...localizedAriaLabel(ui.primaryNavigation)}>
-      <a class="wordmark" href="#top">{profile.shortName}</a>
-      <div class="nav-actions">
-        <ul class="nav-links">
-          {
-            sections.map((section) => (
-              <li>
-                <a href={`#${section.id}`}>
-                  <Localized text={section.title} />
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-        <LanguageToggle />
-      </div>
-    </nav>
+    <SiteNav />
 
     <div class="introduction">
       <p class="eyebrow"><Localized text={profile.headline} /></p>

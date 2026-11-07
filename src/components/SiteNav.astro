@@ -1,0 +1,29 @@
+---
+import { profile } from '../data/profile';
+import { sections } from '../data/sections';
+import { localizedAriaLabel, ui } from '../i18n';
+import LanguageToggle from './LanguageToggle.astro';
+import Localized from './Localized.astro';
+
+// The sections live on the home page: other pages link back to them there.
+const onHomePage = Astro.url.pathname === '/';
+const sectionsPage = onHomePage ? '' : '/';
+---
+
+<nav {...localizedAriaLabel(ui.primaryNavigation)}>
+  <a class="wordmark" href={onHomePage ? '#top' : '/'}>{profile.shortName}</a>
+  <div class="nav-actions">
+    <ul class="nav-links">
+      {
+        sections.map((section) => (
+          <li>
+            <a href={`${sectionsPage}#${section.id}`}>
+              <Localized text={section.title} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <LanguageToggle />
+  </div>
+</nav>

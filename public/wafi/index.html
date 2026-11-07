@@ -1,0 +1,881 @@
+<!doctype html>
+<!--
+  Wafi's page for the portfolio (s-azami.vercel.app/wafi/). Self-contained:
+  copy this whole folder into the portfolio's public/ folder.
+  Both languages are in the HTML; <html lang> decides which one shows, with
+  the same saved choice as the portfolio ("portfolio-language").
+-->
+<html lang="en" data-title-en="Wafi — kind words, now and then" data-title-fr="Wafi — des mots doux, de temps en temps">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wafi — kind words, now and then</title>
+  <script>
+    // Opened as /wafi (no slash), the pictures and fonts would be looked
+    // for one folder too high: go to /wafi/ instead.
+    if (!/\/$|\.html$/.test(location.pathname)) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+    // Applies the language chosen on the portfolio before the first paint.
+    try {
+      if (localStorage.getItem('portfolio-language') === 'fr') {
+        document.documentElement.lang = 'fr';
+        document.title = document.documentElement.dataset.titleFr;
+      }
+    } catch (e) {
+      // Storage blocked: English stays.
+    }
+  </script>
+  <meta name="description" content="Wafi is a gentle little pup who brings you a kind word now and then. An Android app with no account, no ads and no tracking.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FBF6EC" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1C1814" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="img/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="img/icon-192.png">
+  <link rel="preload" href="fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Link previews need absolute addresses: update them if the page moves. -->
+  <link rel="canonical" href="https://s-azami.vercel.app/wafi/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://s-azami.vercel.app/wafi/">
+  <meta property="og:title" content="Wafi — kind words, now and then">
+  <meta property="og:description" content="A gentle little pup who brings you a kind word now and then. No account, no ads, no tracking.">
+  <meta property="og:image" content="https://s-azami.vercel.app/wafi/img/og.png">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="500">
+  <meta property="og:image:alt" content="Wafi the pup's head in a white speech bubble, on a soft blue background">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <style>
+    /* Fredoka (SIL Open Font License, see fonts/OFL.txt), served from here
+       so the page makes no requests to other sites. */
+    @font-face {
+      font-family: "Fredoka";
+      src: url("fonts/fredoka-latin-600-normal.woff2") format("woff2");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Fredoka";
+      src: url("fonts/fredoka-latin-700-normal.woff2") format("woff2");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* The app's "Simple" world: warm paper, soft gold. */
+    :root {
+      color-scheme: light dark;
+      --bg: #FBF6EC;
+      --bg-soft: #F6EEDC;
+      --surface: #FFFFFF;
+      --chip: #F4E8C8;
+      --text: #3A3A3A;
+      --muted: #5F5A52;
+      --line: #E8DFC8;
+      --accent: #C9A94F;
+      --accent-hover: #BC9A3E;
+      --on-accent: #2E2A22;
+      --link: #86641A;
+      --focus: #86641A;
+      --glow: rgba(247, 200, 115, 0.75);
+      --phone: #1F1C19;
+      --shadow: 70 50 20;
+      --content: 68rem;
+      --display: "Fredoka", ui-rounded, system-ui, sans-serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    /* Dark: firelight, like the Cozy Cabin world. */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1C1814;
+        --bg-soft: #221D18;
+        --surface: #2B251F;
+        --chip: #3A3127;
+        --text: #F1EADF;
+        --muted: #C9BEAD;
+        --line: #3B332A;
+        --accent: #E2C27A;
+        --accent-hover: #EDD39A;
+        --on-accent: #2A2014;
+        --link: #E9CB86;
+        --focus: #E9CB86;
+        --glow: rgba(224, 138, 60, 0.32);
+        --phone: #0E0C0A;
+        --shadow: 0 0 0;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+
+    body {
+      margin: 0;
+      min-width: 20rem;
+      background: var(--bg);
+      color: var(--text);
+      font: 1.0625rem/1.6 var(--sans);
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    /* Both languages are in the HTML; <html lang> decides which one shows. */
+    :root:not([lang="fr"]) [data-language="fr"],
+    :root[lang="fr"] [data-language="en"] {
+      display: none !important;
+    }
+
+    a { color: var(--link); text-underline-offset: 0.18em; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+    img { max-width: 100%; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { text-wrap: balance; }
+    p, li { text-wrap: pretty; }
+
+    .content {
+      width: min(100% - 2rem, var(--content));
+      margin-inline: auto;
+    }
+    @media (min-width: 40rem) {
+      .content { width: min(100% - 3rem, var(--content)); }
+    }
+
+    .skip-link {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 10;
+      padding: 0.5rem 0.85rem;
+      border-radius: 0.5rem;
+      background: var(--accent);
+      color: var(--on-accent);
+      font-weight: 600;
+      text-decoration: none;
+      transform: translateY(calc(-100% - 1rem));
+    }
+    .skip-link:focus-visible { transform: none; }
+
+    /* ---------- Header ---------- */
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 1rem;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text);
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .brand img { width: 2.25rem; height: 2.25rem; border-radius: 0.65rem; }
+    .bar-actions { display: flex; align-items: center; gap: 1rem; }
+    .back { color: var(--muted); font-size: 0.95rem; font-weight: 600; text-decoration: none; }
+    .back:hover { color: var(--text); text-decoration: underline; }
+    .language-toggle {
+      min-width: 2.5rem;
+      padding: 0.3rem 0.5rem;
+      border: 1px solid var(--line);
+      border-radius: 0.5rem;
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+    .language-toggle:hover { border-color: var(--muted); }
+
+    /* ---------- Hero ---------- */
+    .hero { padding-block: 1.5rem 4.5rem; overflow: clip; }
+    .hero-grid { display: grid; gap: 3rem; align-items: center; }
+    @media (min-width: 56rem) {
+      .hero { padding-block: 3rem 5.5rem; }
+      .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); }
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1.1rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    h1 {
+      margin-bottom: 1.25rem;
+      font-family: var(--display);
+      font-size: clamp(2.6rem, 6.5vw, 4.1rem);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.01em;
+    }
+    .lead { max-width: 34rem; font-size: clamp(1.12rem, 1.7vw, 1.28rem); }
+    .for { max-width: 34rem; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin-top: 1.9rem; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.45rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--on-accent);
+      font-family: var(--display);
+      font-size: 1.08rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 8px 18px -10px rgb(var(--shadow) / 0.55);
+    }
+    .button:hover { background: var(--accent-hover); }
+    .text-link { font-weight: 600; text-decoration: none; }
+    .text-link:hover { text-decoration: underline; }
+    .soon { margin: 1rem 0 0; color: var(--muted); font-size: 0.95rem; }
+    .promises { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.6rem 0 0; padding: 0; list-style: none; }
+    .promises li {
+      padding: 0.3rem 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hero-visual {
+      --phone-width: clamp(14rem, 25vw, 18rem);
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding-block: 1rem;
+    }
+    .glow {
+      position: absolute;
+      inset: -12% -25%;
+      background: radial-gradient(closest-side, var(--glow), transparent);
+      pointer-events: none;
+    }
+
+    /* A sample kind word: under the phone on narrow screens, floating by
+       its side where there's room, covering as little of it as it can. */
+    .hero-quote {
+      position: relative;
+      z-index: 2;
+      max-width: 17rem;
+      margin: -2.25rem 1rem 0;
+      padding: 1rem 1.15rem 1.1rem;
+      border: 1px solid var(--line);
+      border-radius: 1.25rem;
+      background: var(--surface);
+      box-shadow: 0 18px 40px -18px rgb(var(--shadow) / 0.5);
+      transform: rotate(-2deg);
+    }
+    @media (min-width: 40rem) {
+      .hero-quote {
+        position: absolute;
+        bottom: 14%;
+        left: calc(50% - var(--phone-width) / 2 - 8.5rem);
+        max-width: 12.5rem;
+        margin: 0;
+        transform: rotate(-3deg);
+      }
+    }
+    .hero-quote figcaption {
+      margin-bottom: 0.35rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .hero-quote p { margin: 0; font-family: var(--display); font-size: 1.04rem; font-weight: 600; line-height: 1.35; }
+
+    /* ---------- Phone frame around a screenshot ---------- */
+    .phone {
+      position: relative;
+      z-index: 1;
+      width: var(--phone-width, 100%);
+      padding: 0.55rem;
+      border-radius: 1.75rem;
+      background: var(--phone);
+      box-shadow:
+        inset 0 0 0 1px rgb(255 255 255 / 0.07),
+        0 30px 60px -28px rgb(var(--shadow) / 0.6),
+        0 14px 26px -14px rgb(var(--shadow) / 0.4);
+    }
+    .phone img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 1.2rem;
+      background: var(--bg-soft);
+    }
+    /* The front camera, in the middle of the status bar. */
+    .phone::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      top: calc(0.55rem + 1.8%);
+      left: 50%;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: #070707;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ---------- Sections ---------- */
+    h2 {
+      margin-bottom: 0.6rem;
+      font-family: var(--display);
+      font-size: clamp(1.85rem, 3.6vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .section-intro { max-width: 38rem; margin-bottom: 0; color: var(--muted); }
+
+    /* Screenshots: a row to swipe or scroll, lined up with the page. */
+    .screens {
+      padding-block: 4.5rem 3rem;
+      border-block: 1px solid var(--line);
+      background: var(--bg-soft);
+    }
+    .screens-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem 2rem;
+      margin-bottom: 2rem;
+    }
+    .strip-buttons { display: flex; gap: 0.5rem; }
+    .strip-buttons button {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .strip-buttons button:hover:not(:disabled) { border-color: var(--muted); }
+    .strip-buttons button:disabled { opacity: 0.4; cursor: default; }
+    /* On touch screens, swiping is enough. */
+    @media (hover: none) {
+      .strip-buttons { display: none !important; }
+    }
+    .strip {
+      --edge: max(1rem, (100% - var(--content)) / 2);
+      display: flex;
+      gap: 1.75rem;
+      margin: 0;
+      padding: 0.5rem var(--edge) 1.5rem;
+      list-style: none;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--edge);
+      scrollbar-width: thin;
+    }
+    @media (min-width: 40rem) {
+      .strip { --edge: max(1.5rem, (100% - var(--content)) / 2); }
+    }
+    .strip:focus-visible { outline-offset: -3px; }
+    .shot { flex: 0 0 auto; width: clamp(12.5rem, 62vw, 15rem); scroll-snap-align: start; }
+    .shot h3 { margin: 1.15rem 0 0.3rem; font-family: var(--display); font-size: 1.18rem; font-weight: 600; line-height: 1.25; }
+    .shot p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+    .screens-note { margin: 0.25rem auto 0; color: var(--muted); font-size: 0.85rem; }
+
+    /* What Wafi promises. */
+    .gentle { padding-block: 4.5rem; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+      gap: 1.25rem;
+      margin: 2.25rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .card { padding: 1.5rem; border: 1px solid var(--line); border-radius: 1.5rem; background: var(--surface); }
+    .card-icon {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      margin-bottom: 1rem;
+      border-radius: 0.9rem;
+      background: var(--chip);
+      color: var(--link);
+    }
+    .card h3 { margin-bottom: 0.4rem; font-family: var(--display); font-size: 1.22rem; font-weight: 600; }
+    .card p { margin: 0; color: var(--muted); font-size: 0.98rem; }
+
+    /* Behind the app: for portfolio visitors. */
+    .behind { padding-block: 4.5rem; border-top: 1px solid var(--line); }
+    .behind-grid { display: grid; gap: 1.5rem 4rem; }
+    @media (min-width: 52rem) {
+      .behind-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+    }
+    .facts { display: grid; gap: 0.9rem; margin: 0; padding: 0; list-style: none; }
+    .facts li { position: relative; padding-left: 1.5rem; color: var(--muted); }
+    .facts li::before {
+      content: "";
+      position: absolute;
+      top: 0.62em;
+      left: 0.2rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 1.6rem 0 0; padding: 0; list-style: none; }
+    .tags li {
+      padding: 0.2rem 0.7rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* Try it first: the card Wafi peeks over, as in the app. */
+    .try { padding-block: 1rem 5rem; }
+    .try-card {
+      position: relative;
+      margin-top: 6rem;
+      padding: clamp(1.75rem, 4vw, 2.75rem);
+      border: 1px solid var(--line);
+      border-radius: 1.75rem;
+      background: var(--surface);
+      box-shadow: 0 24px 50px -30px rgb(var(--shadow) / 0.45);
+    }
+    .try-card .pup {
+      position: absolute;
+      /* The drawing is 120 x 112 and the card's edge sits at 100, so it
+         rises 100/120 of its width above the card. */
+      top: calc(-6.5rem * 100 / 120);
+      right: clamp(1.25rem, 6vw, 3rem);
+      width: 6.5rem;
+      height: auto;
+    }
+    .try-card h2 { max-width: 30rem; }
+    .try-card p { max-width: 38rem; color: var(--muted); }
+    .try-card .actions { margin-top: 1.5rem; }
+    .small { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+    /* ---------- Footer ---------- */
+    .site-footer { padding-block: 2rem 2.5rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+    .site-footer p { margin: 0; }
+    .footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 2rem; margin-top: 0.75rem; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">
+    <span data-language="en">Skip to content</span><span data-language="fr">Aller au contenu</span>
+  </a>
+
+  <header>
+    <div class="content bar">
+      <a class="brand" href="#main">
+        <img src="img/icon-192.png" alt="" width="36" height="36">
+        Wafi
+      </a>
+      <div class="bar-actions">
+        <!-- The portfolio's home, when this page is served at /wafi/. -->
+        <a class="back" href="/"><span aria-hidden="true">←</span> Portfolio</a>
+        <button class="language-toggle" type="button" data-language-toggle hidden
+          data-aria-label-en="Show this page in French" data-aria-label-fr="Afficher cette page en anglais"
+          aria-label="Show this page in French">
+          <span data-language="en">FR</span><span data-language="fr">EN</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ======================= Intro ======================= -->
+    <section class="hero">
+      <div class="content hero-grid">
+        <div>
+          <p class="eyebrow">
+            <span data-language="en">Android app · coming soon to Google Play</span>
+            <span data-language="fr">Appli Android · bientôt sur Google Play</span>
+          </p>
+          <h1>
+            <span data-language="en">Kind words, now and&nbsp;then.</span>
+            <span data-language="fr">Des mots doux, de temps en&nbsp;temps.</span>
+          </h1>
+          <p class="lead" data-language="en">Wafi is a gentle little pup who brings you a kind word now and then: on an ordinary day, the evening before an exam, the morning of a hospital appointment, or on a day that feels heavy.</p>
+          <p class="lead" data-language="fr">Wafi, un petit chien attentionné, t’apporte un mot doux de temps en temps&nbsp;: un jour ordinaire, la veille d’un examen, le matin d’un rendez-vous à l’hôpital, ou un jour qui pèse.</p>
+          <p class="for" data-language="en">Made for anyone who feels alone, is grieving, is unwell, or is simply tired.</p>
+          <p class="for" data-language="fr">Pour toutes celles et ceux qui se sentent seuls, sont en deuil, malades, ou simplement fatigués.</p>
+
+          <div class="actions">
+            <a class="button" href="#try">
+              <span data-language="en">Try it first</span><span data-language="fr">L’essayer en premier</span>
+            </a>
+            <a class="text-link" href="#screens">
+              <span data-language="en">See inside</span><span data-language="fr">Voir l’appli</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <ul class="promises">
+            <li><span data-language="en">No account</span><span data-language="fr">Sans compte</span></li>
+            <li><span data-language="en">No ads</span><span data-language="fr">Sans pub</span></li>
+            <li><span data-language="en">No tracking</span><span data-language="fr">Aucun pistage</span></li>
+            <li><span data-language="en">Works offline</span><span data-language="fr">Marche hors ligne</span></li>
+          </ul>
+        </div>
+
+        <div class="hero-visual">
+          <div class="glow" aria-hidden="true"></div>
+          <div class="phone">
+            <img data-language="en" src="screens/en/welcome.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Wafi's hello at the end of the welcome: “Hi, I'm Wafi! I'll bring you a kind word now and then, on ordinary days and on the heavier ones too.”">
+            <img data-language="fr" src="screens/fr/welcome.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Le bonjour de Wafi à la fin de l’accueil : « Coucou, moi c'est Wafi ! Je t'apporterai un mot doux de temps en temps, les jours ordinaires comme les jours plus lourds. »">
+          </div>
+          <!-- Kind words from the app's own library (q015, qfr099). -->
+          <figure class="hero-quote">
+            <figcaption><span data-language="en">A kind word from Wafi</span><span data-language="fr">Un mot doux de Wafi</span></figcaption>
+            <p data-language="en">You don't need to be cheerful to be doing okay. Quiet and tired counts too.</p>
+            <p data-language="fr">Ralentir n'est pas reculer. C'est parfois la façon la plus sûre d'avancer.</p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Screenshots ===================== -->
+    <section class="screens" id="screens" aria-labelledby="screens-title">
+      <div class="content screens-head">
+        <div>
+          <h2 id="screens-title">
+            <span data-language="en">A look inside</span><span data-language="fr">Un aperçu</span>
+          </h2>
+          <p class="section-intro" data-language="en">Calm screens, one kind word at a time, in a look that changes each day.</p>
+          <p class="section-intro" data-language="fr">Des écrans calmes, un mot doux à la fois, dans un décor qui change chaque jour.</p>
+        </div>
+        <div class="strip-buttons" hidden>
+          <button type="button" data-step="-1" aria-label="Previous screens"
+            data-aria-label-en="Previous screens" data-aria-label-fr="Écrans précédents">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" data-step="1" aria-label="Next screens"
+            data-aria-label-en="Next screens" data-aria-label-fr="Écrans suivants">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <ol class="strip" tabindex="0" aria-label="Screenshots" data-aria-label-en="Screenshots" data-aria-label-fr="Captures d’écran">
+        <li class="shot">
+          <div class="phone">
+            <img data-language="en" src="screens/en/home.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Home: a “How are you today?” check-in, then a kind word from Wafi, the pup peeking over the card: “Small steps still move you forward. You're allowed to go slowly.”">
+            <img data-language="fr" src="screens/fr/home.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="L’accueil : « Comment ça va aujourd'hui ? », puis un mot doux de Wafi, le petit chien penché sur la carte : « Un petit pas reste un pas. Tu as le droit d'avancer lentement. »">
+          </div>
+          <h3><span data-language="en">A kind word from Wafi</span><span data-language="fr">Un mot doux de Wafi</span></h3>
+          <p data-language="en">Picked for what you’re going through. A one-tap check-in can make it fit today.</p>
+          <p data-language="fr">Choisi selon ce que tu traverses. L’humeur du jour, en un geste, l’ajuste à ta journée.</p>
+        </li>
+
+        <li class="shot">
+          <div class="phone">
+            <img data-language="en" src="screens/en/kind-word.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="A kind word opened from a notification, in the Nature look: “You don't have to carry today perfectly. You just have to carry it.” Below it: Save, Send, Not for me and Snooze.">
+            <img data-language="fr" src="screens/fr/kind-word.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Un mot doux ouvert depuis une notification, dans le décor Nature : « Tu n'as pas à réussir ta journée. Juste à la traverser, à ton rythme. » En dessous : Garder, Envoyer, Pas pour moi et Pause.">
+          </div>
+          <h3><span data-language="en">Straight from a notification</span><span data-language="fr">Tout droit d’une notification</span></h3>
+          <p data-language="en">Keep it, send it on, pause for a while, or say “not for me” to see fewer like it.</p>
+          <p data-language="fr">Garde-le, transmets-le, fais une pause, ou dis «&nbsp;pas pour moi&nbsp;» pour en voir moins comme lui.</p>
+        </li>
+
+        <li class="shot">
+          <div class="phone">
+            <img data-language="en" src="screens/en/events.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="The calendar: a driving test, Dad's checkup, a job interview and a day of remembrance, each showing when Wafi's kind words will come.">
+            <img data-language="fr" src="screens/fr/events.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Le calendrier : un examen du permis, un rendez-vous de papa, un entretien d'embauche et un jour de souvenir, chacun avec le moment où arriveront les mots doux de Wafi.">
+          </div>
+          <h3><span data-language="en">Around the days that matter</span><span data-language="fr">Autour des jours qui comptent</span></h3>
+          <p data-language="en">An exam, an interview, an anniversary: a kind word comes before and after.</p>
+          <p data-language="fr">Un examen, un entretien, un anniversaire&nbsp;: un mot doux arrive avant et après.</p>
+        </li>
+
+        <li class="shot">
+          <div class="phone">
+            <img data-language="en" src="screens/en/notes.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Notes, in the Letters &amp; Ink look: a birthday note for Yasmine, a note to self, one for future me, and a message from Mom.">
+            <img data-language="fr" src="screens/fr/notes.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Les notes, dans le décor Lettres &amp; Encre : un mot d'anniversaire pour Yasmine, un mot pour soi, un pour le futur moi, et un message de Maman.">
+          </div>
+          <h3><span data-language="en">Notes for you</span><span data-language="fr">Des mots pour toi</span></h3>
+          <p data-language="en">Write to future you, or keep a message from someone you love. They come back now and then.</p>
+          <p data-language="fr">Écris au futur toi, ou garde le message de quelqu’un que tu aimes. Ils te reviennent de temps en temps.</p>
+        </li>
+
+        <li class="shot">
+          <div class="phone">
+            <img data-language="en" src="screens/en/send.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Send a kind word: the picture that will be sent, framed with cherry blossoms, and a choice between picture and text.">
+            <img data-language="fr" src="screens/fr/send.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Envoyer un mot doux : l’image qui sera envoyée, encadrée de fleurs de cerisier, et le choix entre image et texte.">
+          </div>
+          <h3><span data-language="en">Send a kind word</span><span data-language="fr">Envoyer un mot doux</span></h3>
+          <p data-language="en">As a picture or as text, through your phone’s own share menu. Wafi never sends anything by itself.</p>
+          <p data-language="fr">En image ou en texte, avec le menu de partage de ton téléphone. Wafi n’envoie jamais rien tout seul.</p>
+        </li>
+
+        <li class="shot">
+          <div class="phone">
+            <img data-language="en" src="screens/en/cozy-cabin.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Home in the Cozy Cabin look, dark and warm: “In case nobody has said it today: it's good that you're here.”">
+            <img data-language="fr" src="screens/fr/cozy-cabin.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="L’accueil dans le décor Cabane douillette, sombre et chaleureux : « Le monde est un peu plus doux parce que tu y es. »">
+          </div>
+          <h3><span data-language="en">A new look each day</span><span data-language="fr">Un nouveau décor chaque jour</span></h3>
+          <p data-language="en">Firelight inside, rain outside: Cozy Cabin is one of fourteen little worlds.</p>
+          <p data-language="fr">Le feu dedans, la pluie dehors&nbsp;: la Cabane douillette est l’un des quatorze petits mondes.</p>
+        </li>
+
+        <li class="shot">
+          <div class="phone">
+            <img data-language="en" src="screens/en/choose-a-look.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Choose a look: fourteen looks, from Simple and Nature to Space, Winter and Patchwork Quilt.">
+            <img data-language="fr" src="screens/fr/choose-a-look.webp" width="720" height="1440" loading="lazy" decoding="async"
+              alt="Choisis un décor : quatorze décors, de Simple et Nature à Espace, Hiver et Courtepointe.">
+          </div>
+          <h3><span data-language="en">Or one that stays</span><span data-language="fr">Ou celui que tu préfères</span></h3>
+          <p data-language="en">Keep your favorite every day, or Simple, the calmest of all.</p>
+          <p data-language="fr">Garde ton préféré tous les jours, ou Simple, le plus calme de tous.</p>
+        </li>
+      </ol>
+
+      <p class="content screens-note" data-language="en">Screenshots show sample notes and events.</p>
+      <p class="content screens-note" data-language="fr">Les captures montrent des notes et des événements d’exemple.</p>
+    </section>
+
+    <!-- ===================== Promises ===================== -->
+    <section class="gentle" aria-labelledby="gentle-title">
+      <div class="content">
+        <h2 id="gentle-title">
+          <span data-language="en">Gentle by design</span><span data-language="fr">Tout en douceur</span>
+        </h2>
+        <p class="section-intro" data-language="en">Wafi is for people who may be lonely, grieving, ill or overwhelmed, so it never pushes.</p>
+        <p class="section-intro" data-language="fr">Wafi s’adresse à des personnes parfois seules, en deuil, malades ou débordées&nbsp;: il ne force jamais rien.</p>
+
+        <ul class="cards">
+          <li class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+            </div>
+            <h3><span data-language="en">At your own pace</span><span data-language="fr">À ton rythme</span></h3>
+            <p data-language="en">Once a day, three times a week or at the times you choose, with quiet hours. If you’re away for a while, Wafi slows down. No streaks, no “we miss you”.</p>
+            <p data-language="fr">Une fois par jour, trois fois par semaine ou aux heures que tu choisis, avec des heures silencieuses. Si tu t’absentes un moment, Wafi ralentit. Pas de séries, pas de «&nbsp;tu nous manques&nbsp;».</p>
+          </li>
+          <li class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/></svg>
+            </div>
+            <h3><span data-language="en">Everything stays on your phone</span><span data-language="fr">Tout reste sur ton téléphone</span></h3>
+            <p data-language="en">No account, no ads, no tracking. What you write and choose stays on your phone, and nothing is ever sent to us. Something only leaves when you choose to send it.</p>
+            <p data-language="fr">Pas de compte, pas de pub, aucun pistage. Ce que tu écris et choisis reste sur ton téléphone, et rien ne nous est jamais envoyé. Rien ne sort sans que tu le choisisses.</p>
+          </li>
+          <li class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.5-7.5-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 2.8C19.5 15.5 12 20 12 20Z"/></svg>
+            </div>
+            <h3><span data-language="en">For the heavier days too</span><span data-language="fr">Aussi pour les jours lourds</span></h3>
+            <p data-language="en">Kind words that never brush pain aside, and a quiet “Need to talk to someone?” page with listening lines, there if you need it.</p>
+            <p data-language="fr">Des mots doux qui ne balaient jamais la peine, et une page discrète «&nbsp;Besoin de parler à quelqu’un&nbsp;?&nbsp;» avec des lignes d’écoute, là si tu en as besoin.</p>
+          </li>
+          <li class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19 8 6l5 13M4.9 14.5h6.2M14.5 19l3-7.5 3 7.5M15.6 16.5h3.8"/></svg>
+            </div>
+            <h3><span data-language="en">Easy to read</span><span data-language="fr">Facile à lire</span></h3>
+            <p data-language="en">Large text and screen readers, a plain-font option, and decorations that keep still when your phone asks for less motion.</p>
+            <p data-language="fr">Grands textes et lecteurs d’écran, une police simple et lisible, et des décors qui restent immobiles quand ton téléphone demande moins d’animations.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= Behind the app ================= -->
+    <section class="behind" aria-labelledby="behind-title">
+      <div class="content behind-grid">
+        <div>
+          <h2 id="behind-title">
+            <span data-language="en">Behind the app</span><span data-language="fr">Dans les coulisses</span>
+          </h2>
+          <p class="section-intro" data-language="en">A personal project by Soufiane I.H. Azami.</p>
+          <p class="section-intro" data-language="fr">Un projet personnel de Soufiane I.H. Azami.</p>
+          <ul class="tags" aria-label="Technologies">
+            <li>React Native</li>
+            <li>Expo</li>
+            <li>TypeScript</li>
+            <li>SVG</li>
+            <li>i18next</li>
+            <li>Jest</li>
+            <li>EAS Build</li>
+          </ul>
+        </div>
+        <ul class="facts">
+          <li data-language="en">React Native and Expo, in TypeScript. Android first, iPhone next.</li>
+          <li data-language="fr">React Native et Expo, en TypeScript. Android d’abord, iPhone ensuite.</li>
+          <li data-language="en">Local-first: everything is stored on the phone, with no server and no analytics. Backups use Android’s own backup, or a file you export.</li>
+          <li data-language="fr">Local d’abord&nbsp;: tout est stocké sur le téléphone, sans serveur ni statistiques. Les sauvegardes passent par celle d’Android, ou par un fichier que tu exportes.</li>
+          <li data-language="en">Notifications are planned by the phone itself, around quiet hours, pauses and events, and tested in two time zones through their clock changes.</li>
+          <li data-language="fr">Les notifications sont planifiées par le téléphone lui-même, autour des heures silencieuses, des pauses et des événements, et testées dans deux fuseaux horaires, changements d’heure compris.</li>
+          <li data-language="en">Fourteen worlds drawn in code with SVG, a home screen widget, and pictures to share, made from the card itself.</li>
+          <li data-language="fr">Quatorze décors dessinés en code avec SVG, un widget pour l’écran d’accueil, et des images à partager, créées à partir de la carte.</li>
+          <li data-language="en">Hundreds of short kind words, written for each language rather than translated.</li>
+          <li data-language="fr">Des centaines de mots doux courts, écrits pour chaque langue plutôt que traduits.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- =================== Try it first =================== -->
+    <section class="try" id="try" aria-labelledby="try-title">
+      <div class="content">
+        <div class="try-card">
+          <!-- Wafi, drawn like the app's pup (MascotDrawing.tsx, "joy" face). -->
+          <svg class="pup" viewBox="0 0 120 112" width="104" height="97" aria-hidden="true">
+            <path d="M 29 100 C 29 87 39 79 60 79 C 81 79 91 87 91 100" fill="#EAD7B7" stroke="#7A5A43" stroke-width="2.2"/>
+            <path d="M 44 17 C 37 13 29 15 25 21 C 22 26 23 32 26 35 C 28 33 31 29 36 27 Z" transform="rotate(15 40 21)" fill="#D3B48A" stroke="#7A5A43" stroke-width="2.2" stroke-linejoin="round"/>
+            <g transform="matrix(-1 0 0 1 120 0)">
+              <path d="M 44 17 C 37 13 29 15 25 21 C 22 26 23 32 26 35 C 28 33 31 29 36 27 Z" transform="rotate(15 40 21)" fill="#D3B48A" stroke="#7A5A43" stroke-width="2.2" stroke-linejoin="round"/>
+            </g>
+            <path d="M 60 12 C 71 12 80 16 84 24 C 88 31 89 40 88 47 Q 94 51 89 55 Q 93 60 87 63 C 85 69 80 75 75 79 Q 77 87 69 86 Q 67 93 60 91 Q 53 93 51 86 Q 43 87 45 79 C 40 75 35 69 33 63 Q 27 60 31 55 Q 26 51 32 47 C 31 40 32 31 36 24 C 40 16 49 12 60 12 Z" fill="#EAD7B7"/>
+            <path d="M 75 79 Q 77 87 69 86 Q 67 93 60 91 Q 53 93 51 86 Q 43 87 45 79 Q 40 76 44 70 Q 39 66 45 62 C 46 52 52 43 60 43 C 68 43 74 52 75 62 Q 81 66 76 70 Q 80 76 75 79 Z" fill="#F8EFE1"/>
+            <path d="M 60 12 C 71 12 80 16 84 24 C 88 31 89 40 88 47 Q 94 51 89 55 Q 93 60 87 63 C 85 69 80 75 75 79 Q 77 87 69 86 Q 67 93 60 91 Q 53 93 51 86 Q 43 87 45 79 C 40 75 35 69 33 63 Q 27 60 31 55 Q 26 51 32 47 C 31 40 32 31 36 24 C 40 16 49 12 60 12 Z" fill="none" stroke="#7A5A43" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 50 15 Q 53 6 58.5 11 Q 62 4 67 12.5 Q 69 13.5 70 15.5" fill="#EAD7B7" stroke="#7A5A43" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <ellipse cx="38.5" cy="48" rx="4.5" ry="2.8" fill="#F0A396" opacity="0.45"/>
+            <ellipse cx="81.5" cy="48" rx="4.5" ry="2.8" fill="#F0A396" opacity="0.45"/>
+            <path d="M 43 40 Q 47.5 33.5 52 40" fill="none" stroke="#3A2A20" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 40 31.5 Q 42 26.5 47.5 26 Q 51.5 25.8 54.5 28.5 Q 50.5 28.6 48 30 Q 44 29.8 40 31.5 Z" transform="translate(0 -2.5)" fill="#C4A075"/>
+            <g transform="matrix(-1 0 0 1 120 0)">
+              <path d="M 43 40 Q 47.5 33.5 52 40" fill="none" stroke="#3A2A20" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M 40 31.5 Q 42 26.5 47.5 26 Q 51.5 25.8 54.5 28.5 Q 50.5 28.6 48 30 Q 44 29.8 40 31.5 Z" transform="translate(0 -2.5)" fill="#C4A075"/>
+            </g>
+            <path d="M 53.5 56 C 53.5 53 66.5 53 66.5 56 C 66.5 59.5 62.5 62 60 62 C 57.5 62 53.5 59.5 53.5 56 Z" fill="#4A3427"/>
+            <ellipse cx="57.4" cy="55.4" rx="1.7" ry="1" fill="#FFFFFF" opacity="0.55"/>
+            <path d="M 54.6 66.2 Q 60 78 65.4 66.2 Q 62.7 68.2 60 65.2 Q 57.3 68.2 54.6 66.2 Z" fill="#8A4A45" stroke="#7A5A43" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M 56.6 71.5 Q 60 68.4 63.4 71.5 Q 63 75.8 60 75.8 Q 57 75.8 56.6 71.5 Z" fill="#E98A8C"/>
+            <path d="M 60 62 L 60 65.2" fill="none" stroke="#7A5A43" stroke-width="1.8" stroke-linecap="round"/>
+            <g transform="translate(45 0)">
+              <path d="M -10 100 C -10 95.5 -5.5 94 0 94 C 5.5 94 10 95.5 10 100 C 10 105 6 108 0 108 C -6 108 -10 105 -10 100 Z" fill="#EAD7B7" stroke="#7A5A43" stroke-width="2.2"/>
+              <path d="M -3.5 107.5 L -3.5 104.5 M 3.5 107.5 L 3.5 104.5" fill="none" stroke="#7A5A43" stroke-width="1.5" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(75 0)">
+              <path d="M -10 100 C -10 95.5 -5.5 94 0 94 C 5.5 94 10 95.5 10 100 C 10 105 6 108 0 108 C -6 108 -10 105 -10 100 Z" fill="#EAD7B7" stroke="#7A5A43" stroke-width="2.2"/>
+              <path d="M -3.5 107.5 L -3.5 104.5 M 3.5 107.5 L 3.5 104.5" fill="none" stroke="#7A5A43" stroke-width="1.5" stroke-linecap="round"/>
+            </g>
+          </svg>
+
+          <h2 id="try-title">
+            <span data-language="en">Want to try Wafi first?</span><span data-language="fr">Envie d’essayer Wafi en premier&nbsp;?</span>
+          </h2>
+          <p data-language="en">Wafi is almost ready. A small group will try it on Android before it reaches Google Play. If you’d like to be one of them, write to me.</p>
+          <p data-language="fr">Wafi est presque prêt. Un petit groupe va l’essayer sur Android avant sa sortie sur Google Play. Si tu veux en faire partie, écris-moi.</p>
+          <div class="actions">
+            <a class="button" data-language="en" href="mailto:soidhaaz@gmail.com?subject=Trying%20Wafi">Write to me</a>
+            <a class="button" data-language="fr" href="mailto:soidhaaz@gmail.com?subject=Essayer%20Wafi">Écris-moi</a>
+            <p class="small" data-language="en">An Android phone is all you need.</p>
+            <p class="small" data-language="fr">Il suffit d’un téléphone Android.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="content">
+      <p data-language="en">Wafi is not a medical service. If you’re in danger, please call your local emergency number.</p>
+      <p data-language="fr">Wafi n’est pas un service médical. Si tu es en danger, appelle le numéro d’urgence de ton pays.</p>
+      <div class="footer-row">
+        <p>© 2026 Soufiane I.H. Azami</p>
+        <a href="/">
+          <span aria-hidden="true">←</span>
+          <span data-language="en">Back to the portfolio</span><span data-language="fr">Retour au portfolio</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+
+      // ----- Language: same key as the portfolio, so the choice carries over.
+      var toggle = document.querySelector('[data-language-toggle]');
+      function applyLanguage(locale) {
+        var suffix = locale === 'fr' ? 'Fr' : 'En';
+        root.lang = locale;
+        document.title = root.dataset['title' + suffix];
+        document.querySelectorAll('[data-aria-label-en]').forEach(function (element) {
+          element.setAttribute('aria-label', element.dataset['ariaLabel' + suffix]);
+        });
+      }
+      applyLanguage(root.lang === 'fr' ? 'fr' : 'en');
+      if (toggle) {
+        toggle.hidden = false;
+        toggle.addEventListener('click', function () {
+          var next = root.lang === 'fr' ? 'en' : 'fr';
+          try {
+            localStorage.setItem('portfolio-language', next);
+          } catch (e) {
+            // Storage blocked: the choice lasts for this visit only.
+          }
+          applyLanguage(next);
+        });
+      }
+
+      // ----- Screenshot row: arrow buttons for mouse users (swiping and
+      // scrolling work without them).
+      var strip = document.querySelector('.strip');
+      var buttons = document.querySelector('.strip-buttons');
+      if (!strip || !buttons) return;
+      var previous = buttons.querySelector('[data-step="-1"]');
+      var next = buttons.querySelector('[data-step="1"]');
+      var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+      function update() {
+        previous.disabled = strip.scrollLeft <= 4;
+        next.disabled = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4;
+        buttons.hidden = strip.scrollWidth <= strip.clientWidth + 4;
+      }
+      [previous, next].forEach(function (button) {
+        button.addEventListener('click', function () {
+          var step = Number(button.dataset.step) * Math.max(strip.clientWidth * 0.8, 200);
+          strip.scrollBy({ left: step, behavior: calm.matches ? 'auto' : 'smooth' });
+        });
+      });
+      strip.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
+</body>
+</html>

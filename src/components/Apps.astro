@@ -1,0 +1,49 @@
+---
+import { appPagePath, apps } from '../data/apps';
+import { ui } from '../i18n';
+import ExternalLink from './ExternalLink.astro';
+import Localized from './Localized.astro';
+import Section from './Section.astro';
+---
+
+<Section id="apps">
+  <div class="app-list">
+    {
+      apps.map((app) => (
+        <article class="app-item">
+          <h3>{app.name}</h3>
+          <p class="app-summary">
+            <Localized text={app.summary} />
+          </p>
+          <p class="visually-hidden">Technologies</p>
+          <ul class="tag-list">
+            {app.technologies.map((technology) => (
+              <li>{technology}</li>
+            ))}
+          </ul>
+          <ul class="app-links">
+            {app.website && (
+              <li>
+                <a href={app.website}>
+                  <Localized text={ui.website} />
+                </a>
+              </li>
+            )}
+            <li>
+              <a href={appPagePath(app)}>
+                <Localized text={ui.screenshots} />
+              </a>
+            </li>
+            {app.links.map((link) => (
+              <li>
+                <ExternalLink href={link.url}>
+                  <Localized text={link.label} />
+                </ExternalLink>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</Section>

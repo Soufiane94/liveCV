@@ -1,0 +1,69 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import ExternalLink from '../../components/ExternalLink.astro';
+import Footer from '../../components/Footer.astro';
+import Localized from '../../components/Localized.astro';
+import ScreenshotGallery from '../../components/ScreenshotGallery.astro';
+import Section from '../../components/Section.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import { apps } from '../../data/apps';
+import { profile } from '../../data/profile';
+import { sections } from '../../data/sections';
+import { localize, ui } from '../../i18n';
+import Layout from '../../layouts/Layout.astro';
+
+// One page per app in src/data/apps.ts.
+export const getStaticPaths = (() =>
+  apps.map((app) => ({ params: { slug: app.slug }, props: { app } }))) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { app } = Astro.props;
+const appsSection = sections.find((section) => section.id === 'apps');
+
+if (!appsSection) {
+  throw new Error('The "apps" section is missing from sections.ts.');
+}
+---
+
+<Layout title={localize(`${app.name} — ${profile.fullName}`)} description={app.summary.en}>
+  <header class="site-header">
+    <div class="content header-content">
+      <SiteNav />
+
+      <div class="introduction">
+        <p class="eyebrow">
+          <a class="back-link" href={`/#${appsSection.id}`}><Localized text={appsSection.title} /></a>
+        </p>
+        <h1>{app.name}</h1>
+        <p class="app-summary"><Localized text={app.summary} /></p>
+        {
+          (app.website || app.links.length > 0) && (
+            <ul class="app-links">
+              {app.website && (
+                <li>
+                  <a href={app.website}>
+                    <Localized text={ui.website} />
+                  </a>
+                </li>
+              )}
+              {app.links.map((link) => (
+                <li>
+                  <ExternalLink href={link.url}>
+                    <Localized text={link.label} />
+                  </ExternalLink>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <Section id="screenshots" title={ui.screenshots}>
+      <ScreenshotGallery screenshots={app.screenshots} />
+    </Section>
+  </main>
+  <Footer />
+</Layout>

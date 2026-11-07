@@ -1,0 +1,47 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { Screenshot } from '../data/apps';
+import { defaultLocale, locales, ui } from '../i18n';
+import Localized from './Localized.astro';
+
+interface Props {
+  screenshots: Screenshot[];
+}
+
+// Each screenshot gets one thumbnail per language (CSS shows the current one, as for text),
+// linking to a full-size WebP copy for a closer look on small screens.
+const items = await Promise.all(
+  Astro.props.screenshots.map(({ image, alt }) =>
+    Promise.all(
+      locales.map(async (locale) => {
+        const src = 'src' in image ? image : image[locale];
+        return { locale, src, alt: alt[locale], fullSize: await getImage({ src, format: 'webp' }) };
+      }),
+    ),
+  ),
+);
+---
+
+{
+  items.length > 0 ? (
+    <ul class="screenshot-list">
+      {items.map((versions) => (
+        <li>
+          {versions.map(({ locale, src, alt, fullSize }) => (
+            <a href={fullSize.src} data-language={locale} lang={locale === defaultLocale ? undefined : locale}>
+              <Image src={src} alt={alt} widths={[320, 640, 960]} sizes="(max-width: 42rem) 50vw, 18rem" />
+              {' '}
+              <span class="visually-hidden">{ui.fullSize[locale]}</span>
+            </a>
+          ))}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="prose">
+      <p>
+        <Localized text={ui.screenshotsComingSoon} />
+      </p>
+    </div>
+  )
+}

@@ -45,4 +45,8 @@ export const ui = {
   opensInNewTab: { en: '(opens in a new tab)', fr: '(s’ouvre dans un nouvel onglet)' },
   email: { en: 'Email', fr: 'E-mail' },
   downloadCv: { en: 'Download CV (PDF)', fr: 'Télécharger le CV (PDF)' },
+  website: { en: 'Website', fr: 'Site web' },
+  screenshots: { en: 'Screenshots', fr: 'Captures d’écran' },
+  screenshotsComingSoon: { en: 'Screenshots coming soon.', fr: 'Captures d’écran à venir.' },
+  fullSize: { en: '(full size)', fr: '(taille réelle)' },
 } satisfies Record<string, LocalizedText>;

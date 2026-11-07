@@ -4,6 +4,7 @@ import type { LocalizedText } from '../i18n';
 export const sections = [
   { id: 'about', title: { en: 'About', fr: 'À propos' } },
   { id: 'experience', title: { en: 'Experience', fr: 'Expérience' } },
+  { id: 'apps', title: { en: 'Developed apps', fr: 'Applications développées' } },
   { id: 'skills', title: { en: 'Skills', fr: 'Compétences' } },
   { id: 'certifications', title: { en: 'Certifications', fr: 'Certifications' } },
 ] as const satisfies readonly { id: string; title: LocalizedText }[];

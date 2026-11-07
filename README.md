@@ -1,6 +1,6 @@
 # Soufiane's portfolio
 
-A lightweight, static, bilingual (English/French) profile site presenting Soufiane's professional experience, skills, and certifications: https://s-azami.vercel.app/
+A lightweight, static, bilingual (English/French) profile site presenting Soufiane's professional experience, developed apps, skills, and certifications: https://s-azami.vercel.app/
 
 ## Stack
 
@@ -32,6 +32,7 @@ All copy lives in typed modules under `src/data`. A text value is either a plain
 | --- | --- |
 | `profile.ts` | Name, headline, profile links, About text, SEO title and description, optional email and CV links |
 | `experiences.ts` | Roles, dates (`YYYY-MM`, omit `end` for the current role), highlights, technologies |
+| `apps.ts` | Developed apps: summary, technologies, links, and screenshots. Each app also gets its own page at `/apps/<slug>/` |
 | `skills.ts` | Skill categories and groups |
 | `certifications.ts` | Certifications and their verification links |
 | `sections.ts` | Page sections, used for the navigation and section headings |
@@ -40,17 +41,28 @@ Shared interface strings (navigation labels, "Present", etc.) are in `src/i18n.t
 
 `public/og-image.png` (the social preview image) shows the name and headline, so regenerate it if those change.
 
+### Adding app screenshots
+
+1. Put the image files (PNG, JPEG or WebP) in `src/assets/apps/<slug>/`. When the app shows its text in the visitor's language, use one folder per language (`en/`, `fr/`), as Wafi does.
+2. Import each one at the top of `src/data/apps.ts`, e.g. `import homeEn from '../assets/apps/wafi/en/home.webp';`.
+3. List them in the app's `screenshots`, in display order, each with alternative text in both languages: `{ image: { en: homeEn, fr: homeFr }, alt: { en: '…', fr: '…' } }`, or `image: home` when one image serves both languages.
+
+At build time, Astro resizes the screenshots and converts them to WebP. Visitors see the screenshots in their language, and each thumbnail links to a full-size copy. Until an app has screenshots, its page says they are coming soon.
+
+Wafi also has its own self-contained page in `public/wafi/` (made in the KindWords repository, served at `/wafi/` and linked as "Website"). It uses its own copies of the screenshots, so update both folders when they change.
+
 ## Project structure
 
 ```text
-public/            # Favicons and the social preview image
+public/            # Favicons, the social preview image, and Wafi's page (wafi/)
 src/
-├── components/    # Page sections and shared components (Section, Localized, LanguageToggle)
+├── assets/        # App screenshots, optimized at build time
+├── components/    # Page sections and shared components (Section, SiteNav, Localized, LanguageToggle)
 ├── data/          # Typed content
 ├── i18n.ts        # Locales, translation helpers, interface strings
 ├── layouts/       # Document layout and metadata
 ├── lib/           # Structured data (JSON-LD)
-├── pages/         # Routes (index, robots.txt)
+├── pages/         # Routes (index, apps/[slug], robots.txt)
 └── styles/        # Global stylesheet
 ```
 
